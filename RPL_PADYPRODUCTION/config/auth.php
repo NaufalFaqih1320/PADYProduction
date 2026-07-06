@@ -55,6 +55,23 @@ function crewOnly()
 }
 
 /*==========================================
+    CLIENT
+==========================================*/
+
+function clientOnly()
+{
+    checkLogin();
+
+    if ($_SESSION['role'] != 'client') {
+
+        require_once "app.php";
+
+        header("Location: " . BASE_URL . "login.php");
+        exit;
+    }
+}
+
+/*==========================================
     OWNER ATAU ADMIN
 ==========================================*/
 
