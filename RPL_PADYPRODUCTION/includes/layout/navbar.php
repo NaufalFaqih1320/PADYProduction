@@ -75,7 +75,17 @@ Hubungi Kami
 
 </a>
 
+<?php if (isset($_SESSION['login']) && $_SESSION['role'] === 'client'): ?>
+
+<span class="welcome-text">Selamat datang, <?= htmlspecialchars($_SESSION['nama']); ?></span>
+
+<a href="logout.php" class="login-btn">Logout</a>
+
+<?php else: ?>
+
 <a href="login.php" class="login-btn"> Login </a>
+
+<?php endif; ?>
 
 </div>
 

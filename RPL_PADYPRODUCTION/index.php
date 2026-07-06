@@ -1,3 +1,5 @@
+<?php require_once __DIR__ . '/config/session.php'; ?>
+
 <?php include 'includes/layout/header.php'; ?>
 
 <?php include 'includes/layout/navbar.php'; ?>
