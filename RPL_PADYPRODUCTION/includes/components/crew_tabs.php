@@ -1,5 +1,9 @@
 <div class="crew-tabs">
 
+    <a href="dashboard.php" class="crew-tab <?= ($currentTab ?? '') === 'dashboard' ? 'active' : ''; ?>">
+        Dashboard
+    </a>
+
     <a href="inventaris.php" class="crew-tab <?= ($currentTab ?? '') === 'inventaris' ? 'active' : ''; ?>">
         Kelola Inventaris
     </a>
