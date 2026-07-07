@@ -1,160 +1,47 @@
-/* ===========================================
-   INVENTARIS OWNER
-=========================================== */
-
 document.addEventListener("DOMContentLoaded", function () {
 
-    /* ===================================
-       SEARCH REALTIME
-    =================================== */
+    const searchInput = document.getElementById("searchInventaris");
+    const filterKondisi = document.getElementById("filterKondisi");
+    const cards = document.querySelectorAll(".inventory-card[data-search]");
 
-    const searchInput = document.querySelector("input[name='search']");
+    function terapkanFilter() {
 
-    if (searchInput) {
+        const keyword = searchInput ? searchInput.value.toLowerCase() : "";
+        const kondisi = filterKondisi ? filterKondisi.value : "";
 
-        searchInput.addEventListener("keyup", function () {
+        cards.forEach(function (card) {
 
-            let keyword = this.value.toLowerCase();
+            const cocokKeyword = card.dataset.search.includes(keyword);
+            const cocokKondisi = kondisi === "" || card.dataset.kondisi === kondisi;
 
-            let rows = document.querySelectorAll(".inventory-table tbody tr");
-
-            rows.forEach(function (row) {
-
-                let text = row.innerText.toLowerCase();
-
-                if (text.indexOf(keyword) > -1) {
-
-                    row.style.display = "";
-
-                } else {
-
-                    row.style.display = "none";
-
-                }
-
-            });
+            card.style.display = (cocokKeyword && cocokKondisi) ? "" : "none";
 
         });
 
     }
 
-    /* ===================================
-       HOVER EFFECT
-    =================================== */
+    if (searchInput) {
+        searchInput.addEventListener("keyup", terapkanFilter);
+    }
 
-    const cards = document.querySelectorAll(".summary-card");
+    if (filterKondisi) {
+        filterKondisi.addEventListener("change", terapkanFilter);
+    }
 
-    cards.forEach(function (card) {
+    /* ================================
+       Contoh pola untuk fitur khusus role lain:
+       tinggal tambah blok baru di sini, dibungkus
+       pengecekan elemen, tanpa ganggu role lain.
+    ================================ */
 
-        card.addEventListener("mouseenter", function () {
-
-            card.style.transform = "translateY(-5px)";
-            card.style.transition = ".3s";
-
+    // Contoh: tombol hapus/edit yang cuma ada di admin
+    const btnHapus = document.querySelectorAll(".inventory-card .btn-delete");
+    btnHapus.forEach(function (btn) {
+        btn.addEventListener("click", function (e) {
+            if (!confirm("Yakin ingin menghapus barang ini?")) {
+                e.preventDefault();
+            }
         });
-
-        card.addEventListener("mouseleave", function () {
-
-            card.style.transform = "translateY(0px)";
-
-        });
-
-    });
-
-    /* ===================================
-       PREVIEW FOTO
-    =================================== */
-
-    const images = document.querySelectorAll(".inventory-table img");
-
-    images.forEach(function (img) {
-
-        img.style.cursor = "pointer";
-
-        img.addEventListener("click", function () {
-
-            let preview = document.createElement("div");
-
-            preview.classList.add("preview-image");
-
-            preview.innerHTML = `
-
-                <div class="preview-background">
-
-                    <img src="${this.src}">
-
-                </div>
-
-            `;
-
-            document.body.appendChild(preview);
-
-            preview.addEventListener("click", function () {
-
-                preview.remove();
-
-            });
-
-        });
-
-    });
-
-    /* ===================================
-       SORTING
-    =================================== */
-
-    const headers = document.querySelectorAll(".inventory-table th");
-
-    headers.forEach(function (header, index) {
-
-        header.style.cursor = "pointer";
-
-        header.addEventListener("click", function () {
-
-            sortTable(index);
-
-        });
-
     });
 
 });
-
-/* ===========================================
-   SORT TABLE
-=========================================== */
-
-function sortTable(column) {
-
-    let table = document.querySelector(".inventory-table table");
-
-    let rows = Array.from(table.rows).slice(1);
-
-    let asc = table.getAttribute("data-sort") !== "asc";
-
-    rows.sort(function (a, b) {
-
-        let x = a.cells[column].innerText.toLowerCase();
-
-        let y = b.cells[column].innerText.toLowerCase();
-
-        if (!isNaN(x) && !isNaN(y)) {
-
-            return asc ? x - y : y - x;
-
-        }
-
-        return asc
-            ? x.localeCompare(y)
-            : y.localeCompare(x);
-
-    });
-
-    rows.forEach(function (row) {
-
-        table.tBodies[0].appendChild(row);
-
-    });
-
-    table.setAttribute("data-sort", asc ? "asc" : "desc");
-
-}

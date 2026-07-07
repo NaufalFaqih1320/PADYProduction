@@ -10,212 +10,184 @@ ownerOnly();
 ====================================== */
 
 $totalBarang = mysqli_fetch_assoc(mysqli_query($conn, "
-SELECT COUNT(*) total
-FROM inventaris
+    SELECT COUNT(*) total FROM inventaris
 "))['total'];
 
 $totalStok = mysqli_fetch_assoc(mysqli_query($conn, "
-SELECT IFNULL(SUM(stok),0) total
-FROM inventaris
+    SELECT IFNULL(SUM(stok),0) total FROM inventaris
 "))['total'];
 
 $totalBaik = mysqli_fetch_assoc(mysqli_query($conn, "
-SELECT COUNT(*) total
-FROM inventaris
-WHERE kondisi='Baik'
+    SELECT COUNT(*) total FROM inventaris WHERE kondisi='Baik'
 "))['total'];
 
 $totalRusak = mysqli_fetch_assoc(mysqli_query($conn, "
-SELECT COUNT(*) total
-FROM inventaris
-WHERE kondisi<>'Baik'
+    SELECT COUNT(*) total FROM inventaris WHERE kondisi<>'Baik'
 "))['total'];
-
-/* ======================================
-   PENCARIAN
-====================================== */
-
-$keyword = "";
-
-if (isset($_GET['search'])) {
-    $keyword = mysqli_real_escape_string($conn, $_GET['search']);
-}
 
 /* ======================================
    QUERY INVENTARIS
 ====================================== */
 
-$sql = "
-SELECT
-inventaris.*,
-kategori_inventaris.nama_kategori
-FROM inventaris
-
-LEFT JOIN kategori_inventaris
-ON inventaris.id_kategori = kategori_inventaris.id_kategori
-";
-
-if ($keyword != "") {
-
-    $sql .= "
-WHERE
-inventaris.nama_barang LIKE '%$keyword%'
-OR kategori_inventaris.nama_kategori LIKE '%$keyword%'
-OR inventaris.lokasi LIKE '%$keyword%'
-";
-}
-
-$sql .= "
-ORDER BY inventaris.created_at DESC
-";
-
-$queryInventaris = mysqli_query($conn, $sql);
+$queryInventaris = mysqli_query($conn, "
+    SELECT
+        inventaris.*,
+        kategori_inventaris.nama_kategori
+    FROM inventaris
+    LEFT JOIN kategori_inventaris
+        ON inventaris.id_kategori = kategori_inventaris.id_kategori
+    ORDER BY inventaris.created_at DESC
+");
 
 ?>
-
 <!DOCTYPE html>
-
 <html lang="id">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inventaris Owner</title>
-
-    <link rel="stylesheet"
-        href="../assets/css/dashboard.css">
-
-    <link rel="stylesheet"
-        href="../assets/css/inventaris.css">
-
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
+    <link rel="stylesheet" href="../assets/css/inventaris.css">
 </head>
-
 <body>
-    <div class="wrapper">
-        <?php include "../includes/layout/sidebar.php"; ?>
-        <div class="main-content">
-            <?php include "../includes/layout/topbar.php"; ?>
-            <div class="content-box">
-                <h2>Inventaris PADY Production</h2>
-                <div class="inventory-summary">
-                    <div class="summary-card">
-                        <h4>Total Barang</h4>
-                        <h2><?= $totalBarang ?></h2>
-                    </div>
-                    <div class="summary-card">
-                        <h4>Total Stok</h4>
-                        <h2><?= $totalStok ?></h2>
-                    </div>
-                    <div class="summary-card">
-                        <h4>Kondisi Baik</h4>
-                        <h2><?= $totalBaik ?></h2>
-                    </div>
-                    <div class="summary-card">
-                        <h4>Rusak</h4>
-                        <h2><?= $totalRusak ?></h2>
-                    </div>
+
+<div class="wrapper">
+
+    <?php include "../includes/layout/sidebar.php"; ?>
+
+    <div class="main-content">
+
+        <?php include "../includes/layout/topbar.php"; ?>
+
+        <div class="content-box">
+
+            <h3>Inventaris PADY Production</h3>
+
+            <div class="statistik inv-statistik">
+
+                <div class="stat-card">
+                    <h2><?= $totalBarang ?></h2>
+                    <p>Total Barang</p>
                 </div>
-                <div class="inventory-toolbar">
-                    <form method="GET">
-                        <input
-                            type="text
-                            name=" search"
-                            placeholder="Cari barang..."
-                            value="<?= htmlspecialchars($keyword) ?>">
-                        <button type="submit">
-                            Cari
-                        </button>
-                    </form>
+
+                <div class="stat-card">
+                    <h2><?= $totalStok ?></h2>
+                    <p>Total Stok</p>
                 </div>
-                <div class="inventory-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <!-- <th>Foto</th> -->
-                                <th>Nama Barang</th>
-                                <th>Kategori</th>
-                                <th>Stok</th>
-                                <th>Kondisi</th>
-                                <th>Lokasi</th>
-                                <th>Keterangan</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $no = 1;
-                            if (mysqli_num_rows($queryInventaris) > 0):
-                                while ($row = mysqli_fetch_assoc($queryInventaris)):
-                            ?>
-                                    <tr>
-                                        <td><?= $no++ ?></td>
-                                        <!-- <td>
-                                            <?php
 
-                                            $foto = "../uploads/inventaris/" . $row['foto'];
-
-                                            if (!empty($row['foto']) && file_exists($foto)) {
-                                            ?>
-
-                                                <img src="<?= $foto ?>">
-
-                                            <?php } else { ?>
-
-                                                <img src="../assets/images/no-image.png">
-
-                                            <?php } ?>
-                                        </td> -->
-                                        <td>
-                                            <?= htmlspecialchars($row['nama_barang']) ?>
-                                        </td>
-                                        <td>
-                                            <?= htmlspecialchars($row['nama_kategori']) ?>
-                                        </td>
-                                        <td>
-                                            <?= $row['stok'] ?>
-                                        </td>
-                                        <td>
-                                            <?php
-                                            if ($row['kondisi'] == "Baik") {
-
-                                                echo "<span class='badge-good'>Baik</span>";
-                                            } elseif ($row['kondisi'] == "Rusak Ringan") {
-
-                                                echo "<span class='badge-warning'>Rusak Ringan</span>";
-                                            } else {
-
-                                                echo "<span class='badge-danger'>" . $row['kondisi'] . "</span>";
-                                            }
-                                            ?>
-                                        </td>
-                                        <td>
-                                            <?= htmlspecialchars($row['lokasi']) ?>
-                                        </td>
-                                        <td>
-                                            <?= htmlspecialchars($row['keterangan']) ?>
-                                        </td>
-                                    </tr>
-                                <?php
-                                endwhile;
-                            else:
-                                ?>
-                                <tr>
-                                    <td colspan="8">
-                                        Belum ada data inventaris.
-                                    </td>
-                                </tr>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
+                <div class="stat-card">
+                    <h2><?= $totalBaik ?></h2>
+                    <p>Kondisi Baik</p>
                 </div>
+
+                <div class="stat-card">
+                    <h2><?= $totalRusak ?></h2>
+                    <p>Perlu Perhatian</p>
+                </div>
+
             </div>
-        </div>
-    </div>
-    <script src="../assets/js/inventaris.js"></script>
-</body>
 
+            <div class="toolbar">
+
+                <div class="left-toolbar">
+
+                    <div class="search-box">
+                        <input
+                            type="text"
+                            id="searchInventaris"
+                            placeholder="Cari nama barang, kategori, atau lokasi...">
+                    </div>
+
+                    <div class="filter">
+                        <select id="filterKondisi">
+                            <option value="">Semua Kondisi</option>
+                            <option value="baik">Baik</option>
+                            <option value="rusak ringan">Rusak Ringan</option>
+                            <option value="rusak berat">Rusak Berat</option>
+                        </select>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="inventory-grid">
+
+                <?php if (mysqli_num_rows($queryInventaris) > 0): ?>
+
+                    <?php while ($row = mysqli_fetch_assoc($queryInventaris)): ?>
+
+                        <?php
+                            $kondisi = strtolower($row['kondisi']);
+
+                            if ($kondisi == "baik") {
+                                $statusClass = "selesai";
+                            } elseif ($kondisi == "rusak ringan") {
+                                $statusClass = "pending";
+                            } else {
+                                $statusClass = "rusak";
+                            }
+                        ?>
+
+                        <div class="inventory-card"
+                            data-search="<?= strtolower(
+                                $row['nama_barang'] . ' ' .
+                                ($row['nama_kategori'] ?? '') . ' ' .
+                                $row['lokasi']
+                            ); ?>"
+                            data-kondisi="<?= $kondisi; ?>">
+
+                            <div class="booking-header">
+                                <div>
+                                    <h3><?= htmlspecialchars($row['nama_barang']); ?></h3>
+                                    <small><?= htmlspecialchars($row['nama_kategori'] ?? '-'); ?></small>
+                                </div>
+
+                                <span class="status <?= $statusClass; ?>">
+                                    <?= htmlspecialchars($row['kondisi']); ?>
+                                </span>
+                            </div>
+
+                            <div class="booking-body">
+
+                                <div class="booking-item">
+                                    <label>Stok</label>
+                                    <p><?= (int) $row['stok']; ?> unit</p>
+                                </div>
+
+                                <div class="booking-item">
+                                    <label>Lokasi</label>
+                                    <p><?= htmlspecialchars($row['lokasi']); ?></p>
+                                </div>
+
+                                <div class="booking-item full">
+                                    <label>Keterangan</label>
+                                    <p><?= !empty($row['keterangan']) ? htmlspecialchars($row['keterangan']) : "-"; ?></p>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    <?php endwhile; ?>
+
+                <?php else: ?>
+
+                    <div class="inventory-card">
+                        <h3>Belum ada data inventaris.</h3>
+                    </div>
+
+                <?php endif; ?>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="../assets/js/inventaris.js"></script>
+
+</body>
 </html>
