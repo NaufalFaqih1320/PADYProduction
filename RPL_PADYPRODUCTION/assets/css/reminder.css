@@ -1,0 +1,94 @@
+/* ============================================
+   REMINDER (shared: owner, admin, crew)
+============================================ */
+
+.reminder-list{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.reminder-card{
+    background:#fff;
+    border:1px solid #E5E5E5;
+    border-radius:16px;
+    padding:22px;
+    transition:.3s;
+}
+
+.reminder-card:hover{
+    box-shadow:0 8px 18px rgba(0,0,0,.08);
+}
+
+.reminder-card .booking-body{
+    grid-template-columns:repeat(3,1fr);
+    margin-bottom:0;
+}
+
+.reminder-card .booking-item.full{
+    grid-column:1 / -1;
+}
+
+/* ==========================
+   BADGE URGENSI
+========================== */
+
+.urgensi{
+    display:inline-block;
+    padding:6px 14px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:600;
+    white-space:nowrap;
+}
+
+.urgensi.lewat{
+    background:#F8D7DA;
+    color:#842029;
+}
+
+.urgensi.hari-ini{
+    background:#FFE0D1;
+    color:#B94A00;
+}
+
+.urgensi.besok{
+    background:#FFF3CD;
+    color:#856404;
+}
+
+.urgensi.minggu-ini{
+    background:#DDEEFF;
+    color:#1F5DB5;
+}
+
+/* ==========================
+   AKSI
+========================== */
+
+.reminder-action{
+    display:flex;
+    gap:10px;
+    margin-top:20px;
+}
+
+.reminder-action a{
+    text-decoration:none;
+    text-align:center;
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media(max-width:768px){
+
+    .reminder-card .booking-body{
+        grid-template-columns:1fr;
+    }
+
+    .reminder-action{
+        flex-direction:column;
+    }
+
+}

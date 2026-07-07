@@ -111,7 +111,7 @@ if ($activeId > 0) {
 
                             <?php while ($kontak = mysqli_fetch_assoc($queryKontak)): ?>
 
-                                
+                                <a
                                     href="chat.php?id=<?= $kontak['id_user']; ?>"
                                     class="chat-item <?= ($kontak['id_user'] == $activeId) ? 'active' : ''; ?>"
                                     data-search="<?= strtolower($kontak['nama'] . ' ' . $kontak['email']); ?>">
