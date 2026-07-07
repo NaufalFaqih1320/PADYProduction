@@ -91,4 +91,24 @@ function ownerAdmin()
     }
 }
 
+/*==========================================
+    ADMIN ATAU CREW
+==========================================*/
+
+function adminCrew()
+{
+    checkLogin();
+
+    if (
+        $_SESSION['role'] != 'admin' &&
+        $_SESSION['role'] != 'crew'
+    ) {
+
+        require_once "app.php";
+
+        header("Location: " . BASE_URL . "login.php");
+        exit;
+    }
+}
+
 ?>

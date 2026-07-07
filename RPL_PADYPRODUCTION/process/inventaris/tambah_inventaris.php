@@ -3,7 +3,7 @@
 require_once "../../config/database.php";
 require_once "../../config/auth.php";
 
-crewOnly();
+adminCrew();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header("Location: " . BASE_URL . "crew/inventaris.php");
