@@ -4,7 +4,7 @@
     KONFIGURASI WEBSITE
 ==========================================*/
 
-define('BASE_URL', 'http://localhost/PADYProduction/RPL_PADYPRODUCTION/');
+define('BASE_URL', 'http://localhost/RPL_PADYPRODUCTION/PADYProduction/RPL_PADYPRODUCTION/');
 
 define('APP_NAME', 'PADY Production');
 
