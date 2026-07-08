@@ -5,6 +5,8 @@ require_once "../config/auth.php";
 
 ownerOnly();
 
+$currentTab = 'chat';
+
 $ownerId = (int) $_SESSION['id_user'];
 
 /* ======================================
@@ -77,22 +79,21 @@ if ($activeId > 0) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat Owner</title>
+    <link rel="stylesheet" href="../assets/css/crew.css">
     <link rel="stylesheet" href="../assets/css/dashboard.css">
     <link rel="stylesheet" href="../assets/css/chat.css">
 </head>
 <body>
 
-<div class="wrapper">
+<?php include "../includes/layout/topbar.php"; ?>
 
-    <?php include "../includes/layout/sidebar.php"; ?>
+<?php include "../includes/components/owner_tabs.php"; ?>
 
-    <div class="main-content">
+<div class="crew-content">
 
-        <?php include "../includes/layout/topbar.php"; ?>
-
-        <div class="content-box chat-content-box">
-
-            <h3>Chat dengan Client</h3>
+    <div class="crew-page-header">
+        <h2>Chat dengan Client</h2>
+    </div>
 
             <div class="chat-wrapper">
 
@@ -194,12 +195,9 @@ if ($activeId > 0) {
 
             </div>
 
-        </div>
-
-    </div>
-
 </div>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 <script src="../assets/js/chat.js"></script>
 
 </body>

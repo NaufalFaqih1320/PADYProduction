@@ -5,6 +5,8 @@ require_once "../config/auth.php";
 
 ownerOnly();
 
+$currentTab = 'booking';
+
 $queryBooking = mysqli_query($conn, "
     SELECT *
     FROM booking
@@ -19,37 +21,29 @@ $queryBooking = mysqli_query($conn, "
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Booking</title>
+    <link rel="stylesheet" href="../assets/css/crew.css">
     <link rel="stylesheet" href="../assets/css/dashboard.css">
 </head>
 <body>
 
-<div class="wrapper">
+<?php include "../includes/layout/topbar.php"; ?>
 
-    <?php include "../includes/layout/sidebar.php"; ?>
+<?php include "../includes/components/owner_tabs.php"; ?>
 
-    <div class="main-content">
+<div class="crew-content">
 
-        <?php include "../includes/layout/topbar.php"; ?>
-
-        <div class="content-box">
-
-            <h3>Daftar Booking</h3>
-
-            <div class="tab-content" style="display:block;">
-
-                <?php include "../includes/components/modal_booking.php"; ?>
-                <?php include "../includes/components/toolbar.php"; ?>
-                <?php include "../includes/components/booking_card.php"; ?>
-
-            </div>
-
-        </div>
-
-        <script src="../assets/js/dashboard.js"></script>
-
+    <div class="crew-page-header">
+        <h2>Daftar Booking</h2>
     </div>
 
+    <?php include "../includes/components/modal_booking.php"; ?>
+    <?php include "../includes/components/toolbar.php"; ?>
+    <?php include "../includes/components/booking_card.php"; ?>
+
 </div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<script src="../assets/js/dashboard.js"></script>
 
 </body>
 </html>

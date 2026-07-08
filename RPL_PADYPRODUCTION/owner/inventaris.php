@@ -5,6 +5,8 @@ require_once "../config/auth.php";
 
 ownerOnly();
 
+$currentTab = 'inventaris';
+
 /* ======================================
    STATISTIK
 ====================================== */
@@ -46,41 +48,40 @@ $queryInventaris = mysqli_query($conn, "
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inventaris Owner</title>
+    <link rel="stylesheet" href="../assets/css/crew.css">
     <link rel="stylesheet" href="../assets/css/dashboard.css">
     <link rel="stylesheet" href="../assets/css/inventaris.css">
 </head>
 <body>
 
-<div class="wrapper">
+<?php include "../includes/layout/topbar.php"; ?>
 
-    <?php include "../includes/layout/sidebar.php"; ?>
+<?php include "../includes/components/owner_tabs.php"; ?>
 
-    <div class="main-content">
+<div class="crew-content">
 
-        <?php include "../includes/layout/topbar.php"; ?>
+    <div class="crew-page-header">
+        <h2>Inventaris PADY Production</h2>
+    </div>
 
-        <div class="content-box">
+            <div class="crew-statistik">
 
-            <h3>Inventaris PADY Production</h3>
-
-            <div class="statistik inv-statistik">
-
-                <div class="stat-card">
+                <div class="crew-stat-card">
                     <h2><?= $totalBarang ?></h2>
                     <p>Total Barang</p>
                 </div>
 
-                <div class="stat-card">
+                <div class="crew-stat-card">
                     <h2><?= $totalStok ?></h2>
                     <p>Total Stok</p>
                 </div>
 
-                <div class="stat-card">
+                <div class="crew-stat-card">
                     <h2><?= $totalBaik ?></h2>
                     <p>Kondisi Baik</p>
                 </div>
 
-                <div class="stat-card">
+                <div class="crew-stat-card warning">
                     <h2><?= $totalRusak ?></h2>
                     <p>Perlu Perhatian</p>
                 </div>
@@ -181,12 +182,9 @@ $queryInventaris = mysqli_query($conn, "
 
             </div>
 
-        </div>
-
-    </div>
-
 </div>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 <script src="../assets/js/inventaris.js"></script>
 
 </body>

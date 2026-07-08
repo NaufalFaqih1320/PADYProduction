@@ -5,6 +5,8 @@ require_once "../config/auth.php";
 
 ownerOnly();
 
+$currentTab = 'jadwal';
+
 /* ===========================
    AMBIL DATA BOOKING (AGENDA / LIST)
 =========================== */
@@ -95,6 +97,7 @@ while ($row = mysqli_fetch_assoc($queryBulanIni)) {
 
     <title>Jadwal Booking</title>
 
+    <link rel="stylesheet" href="../assets/css/crew.css">
     <link rel="stylesheet" href="../assets/css/dashboard.css">
 
     <style>
@@ -305,17 +308,17 @@ while ($row = mysqli_fetch_assoc($queryBulanIni)) {
 </head>
 <body>
 
-<div class="wrapper">
+<?php include "../includes/layout/topbar.php"; ?>
 
-    <?php include "../includes/layout/sidebar.php"; ?>
+<?php include "../includes/components/owner_tabs.php"; ?>
 
-    <div class="main-content">
+<div class="crew-content">
 
-        <?php include "../includes/layout/topbar.php"; ?>
+    <div class="crew-page-header">
+        <h2>Jadwal Booking</h2>
+    </div>
 
-        <div class="content-box">
-
-            <h3>Jadwal Booking</h3>
+    <div class="content-box">
 
             <div class="tabs">
 
@@ -527,11 +530,11 @@ while ($row = mysqli_fetch_assoc($queryBulanIni)) {
 
             </div>
 
-        </div>
-
     </div>
 
 </div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
 <script>
 

@@ -46,16 +46,39 @@
 
     </header>
 
+<?php elseif ($role === 'owner'): ?>
+
+    <!-- ======================================
+         TOPBAR OWNER (mengikuti gaya UI crew/admin)
+    ====================================== -->
+
+    <header class="crew-topbar">
+
+        <div class="crew-topbar-left">
+
+            <img src="../assets/images/logo.png" alt="PADY Production">
+
+            <div>
+                <h1>PADYProduction</h1>
+                <p>Dashboard Owner - Selamat Datang, <?= htmlspecialchars($_SESSION['nama']); ?></p>
+            </div>
+
+        </div>
+
+        <a href="../logout.php" class="btn-keluar">Keluar</a>
+
+    </header>
+
 <?php else: ?>
 
     <!-- ======================================
-         TOPBAR OWNER (default)
+         TOPBAR DEFAULT
     ====================================== -->
 
     <div class="topbar">
 
         <div>
-            <h1>Dashboard Owner</h1>
+            <h1>Dashboard</h1>
             <p>Selamat Datang, <strong><?= $_SESSION['nama']; ?></strong></p>
         </div>
 

@@ -5,6 +5,8 @@ require_once "../config/auth.php";
 
 ownerOnly();
 
+$currentTab = 'laporan';
+
 /* ======================================
    FILTER PERIODE
 ====================================== */
@@ -90,24 +92,25 @@ $namaBulan = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Laporan Owner</title>
+    <link rel="stylesheet" href="../assets/css/crew.css">
     <link rel="stylesheet" href="../assets/css/dashboard.css">
     <link rel="stylesheet" href="../assets/css/laporan.css">
 </head>
 <body>
 
-<div class="wrapper">
+<?php include "../includes/layout/topbar.php"; ?>
 
-    <?php include "../includes/layout/sidebar.php"; ?>
+<?php include "../includes/components/owner_tabs.php"; ?>
 
-    <div class="main-content">
+<div class="crew-content" id="areaCetak">
 
-        <?php include "../includes/layout/topbar.php"; ?>
-
-        <div class="content-box" id="areaCetak">
+    <div class="crew-page-header">
+        <h2>Laporan Booking</h2>
+    </div>
 
             <div class="laporan-heading">
 
-                <h3>Laporan Booking — <?= $namaBulan[$bulan] . ' ' . $tahun; ?></h3>
+                <h3>Periode: <?= $namaBulan[$bulan] . ' ' . $tahun; ?></h3>
 
                 <div class="laporan-actions no-print">
 
@@ -139,24 +142,24 @@ $namaBulan = [
 
             </div>
 
-            <div class="statistik">
+            <div class="crew-statistik">
 
-                <div class="stat-card">
+                <div class="crew-stat-card">
                     <h2><?= $totalBooking ?></h2>
                     <p>Total Booking</p>
                 </div>
 
-                <div class="stat-card">
+                <div class="crew-stat-card">
                     <h2><?= $totalSelesai ?></h2>
                     <p>Selesai</p>
                 </div>
 
-                <div class="stat-card">
+                <div class="crew-stat-card">
                     <h2><?= $totalPending ?></h2>
                     <p>Pending</p>
                 </div>
 
-                <div class="stat-card">
+                <div class="crew-stat-card">
                     <h2><?= formatRupiah($totalPendapatan); ?></h2>
                     <p>Pendapatan (Selesai)</p>
                 </div>
@@ -278,12 +281,9 @@ $namaBulan = [
 
             </div>
 
-        </div>
-
-    </div>
-
 </div>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 <script src="../assets/js/laporan.js"></script>
 
 </body>
