@@ -34,6 +34,9 @@
     <link rel="stylesheet"
           href="assets/css/responsive.css">
 
+    <link rel="stylesheet"
+          href="assets/css/chat_widget.css">
+
 </head>
 
 <body>

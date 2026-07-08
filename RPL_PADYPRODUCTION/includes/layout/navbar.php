@@ -67,21 +67,27 @@ Portofolio
 
 <div class="button-group">
 
-<a href="#"
+<?php if (isset($_SESSION['login']) && $_SESSION['role'] === 'client'): ?>
 
-class="contact-btn">
+<a href="#" id="openChatBtn" class="contact-btn">
 
 Hubungi Kami
 
-</a>
+<span class="chat-btn-badge" id="chatBtnBadge"></span>
 
-<?php if (isset($_SESSION['login']) && $_SESSION['role'] === 'client'): ?>
+</a>
 
 <span class="welcome-text">Selamat datang, <?= htmlspecialchars($_SESSION['nama']); ?></span>
 
 <a href="logout.php" class="login-btn">Logout</a>
 
 <?php else: ?>
+
+<a href="login.php" class="contact-btn">
+
+Hubungi Kami
+
+</a>
 
 <a href="login.php" class="login-btn"> Login </a>
 

@@ -207,6 +207,22 @@ function getUnreadNotificationCount($conn, int $user_id): int {
     return $result ? (int)mysqli_fetch_assoc($result)['n'] : 0;
 }
 
+// ─── Chat Client-Owner ─────────────────────────────────────────────────────────
+
+/**
+ * Ambil id_user owner utama (akun owner aktif dengan id terkecil).
+ * Dipakai supaya semua pesan dari client selalu diarahkan ke satu owner yang sama.
+ */
+function getPrimaryOwnerId($conn): ?int {
+    $result = mysqli_query($conn,
+        "SELECT id_user FROM users WHERE role='owner' AND status='aktif' ORDER BY id_user ASC LIMIT 1"
+    );
+    if ($result && $row = mysqli_fetch_assoc($result)) {
+        return (int) $row['id_user'];
+    }
+    return null;
+}
+
 // ─── Chatbot ──────────────────────────────────────────────────────────────────
 
 function chatbotReply($conn, string $message): ?string {

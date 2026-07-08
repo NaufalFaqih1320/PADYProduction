@@ -1,0 +1,275 @@
+/* ============================================
+   CHAT WIDGET — CLIENT (drawer overlay)
+   Menimpa sebagian halaman (~1/3 layar di desktop)
+============================================ */
+
+.chat-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    opacity:0;
+    visibility:hidden;
+    transition:opacity .3s ease;
+    z-index:1200;
+}
+
+.chat-overlay.active{
+    opacity:1;
+    visibility:visible;
+}
+
+.chat-drawer{
+    position:fixed;
+    top:0;
+    right:0;
+    height:100vh;
+    width:33%;
+    min-width:340px;
+    max-width:460px;
+
+    background:var(--dark2,#1D1D1D);
+    border-left:1px solid var(--border,#313131);
+    box-shadow:-8px 0 30px rgba(0,0,0,.35);
+
+    display:flex;
+    flex-direction:column;
+
+    transform:translateX(100%);
+    transition:transform .35s cubic-bezier(.4,0,.2,1);
+    z-index:1300;
+}
+
+.chat-drawer.active{
+    transform:translateX(0);
+}
+
+/* ==========================
+   HEADER
+========================== */
+
+.chat-drawer-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding:18px 20px;
+    border-bottom:1px solid var(--border,#313131);
+    background:var(--dark,#171717);
+}
+
+.chat-drawer-title{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.chat-drawer-avatar{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--primary,#D89243);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:16px;
+    flex-shrink:0;
+}
+
+.chat-drawer-title h4{
+    color:#fff;
+    font-size:15px;
+    margin-bottom:2px;
+}
+
+.chat-drawer-title small{
+    color:var(--paragraph,#c5c5c5);
+    font-size:12px;
+}
+
+.chat-drawer-close{
+    background:transparent;
+    border:none;
+    color:var(--paragraph,#c5c5c5);
+    font-size:18px;
+    cursor:pointer;
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:.2s;
+}
+
+.chat-drawer-close:hover{
+    background:rgba(255,255,255,.08);
+    color:#fff;
+}
+
+/* ==========================
+   MESSAGES
+========================== */
+
+.chat-drawer-messages{
+    flex:1;
+    overflow-y:auto;
+    padding:20px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    background:var(--dark2,#1D1D1D);
+}
+
+.chat-drawer-loading,
+.chat-drawer-empty{
+    margin:auto;
+    color:var(--paragraph,#c5c5c5);
+    font-size:13px;
+    text-align:center;
+}
+
+.chat-drawer-date{
+    text-align:center;
+    color:var(--paragraph,#c5c5c5);
+    font-size:11px;
+    margin:8px 0 4px;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+}
+
+.chat-drawer-bubble{
+    max-width:78%;
+    padding:10px 14px;
+    border-radius:14px;
+    font-size:14px;
+    line-height:1.45;
+    word-wrap:break-word;
+}
+
+.chat-drawer-bubble span{
+    display:block;
+    font-size:10px;
+    margin-top:4px;
+    opacity:.65;
+}
+
+.chat-drawer-bubble.sent{
+    align-self:flex-end;
+    background:var(--primary,#D89243);
+    color:#fff;
+    border-bottom-right-radius:2px;
+}
+
+.chat-drawer-bubble.received{
+    align-self:flex-start;
+    background:#2A2A2A;
+    color:#f1f1f1;
+    border:1px solid var(--border,#313131);
+    border-bottom-left-radius:2px;
+}
+
+/* ==========================
+   INPUT
+========================== */
+
+.chat-drawer-input{
+    display:flex;
+    align-items:flex-end;
+    gap:10px;
+    padding:14px 16px;
+    border-top:1px solid var(--border,#313131);
+    background:var(--dark,#171717);
+}
+
+.chat-drawer-input textarea{
+    flex:1;
+    resize:none;
+    max-height:100px;
+    padding:12px 14px;
+    border-radius:12px;
+    border:1.5px solid var(--border,#313131);
+    background:#232323;
+    color:#fff;
+    font-family:inherit;
+    font-size:14px;
+    outline:none;
+    transition:.2s;
+}
+
+.chat-drawer-input textarea::placeholder{
+    color:#888;
+}
+
+.chat-drawer-input textarea:focus{
+    border-color:var(--primary,#D89243);
+    box-shadow:0 0 0 3px rgba(216,146,67,.18);
+}
+
+.chat-drawer-input button{
+    flex-shrink:0;
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    border:none;
+    background:var(--primary,#D89243);
+    color:#fff;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:.25s;
+}
+
+.chat-drawer-input button:hover{
+    background:var(--primary-hover,#C67C2E);
+}
+
+.chat-drawer-input button:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+/* ==========================
+   NOTIFICATION BADGE (tombol Hubungi Kami)
+========================== */
+
+.contact-btn{
+    position:relative;
+}
+
+.chat-btn-badge{
+    position:absolute;
+    top:-8px;
+    right:-8px;
+    background:#E63946;
+    color:#fff;
+    font-size:11px;
+    font-weight:700;
+    min-width:18px;
+    height:18px;
+    padding:0 5px;
+    border-radius:999px;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    line-height:1;
+}
+
+.chat-btn-badge.show{
+    display:flex;
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media(max-width:768px){
+
+    .chat-drawer{
+        width:100%;
+        min-width:0;
+        max-width:none;
+    }
+
+}
