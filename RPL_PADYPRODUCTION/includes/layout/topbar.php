@@ -26,21 +26,25 @@
 <?php elseif ($role === 'admin'): ?>
 
     <!-- ======================================
-         TOPBAR ADMIN
+         TOPBAR ADMIN (mengikuti gaya UI crew)
     ====================================== -->
 
-    <div class="topbar">
+    <header class="crew-topbar">
 
-        <div>
-            <h1>Dashboard Admin</h1>
-            <p>Selamat Datang, <strong><?= $_SESSION['nama']; ?></strong></p>
+        <div class="crew-topbar-left">
+
+            <img src="../assets/images/logo.png" alt="PADY Production">
+
+            <div>
+                <h1>PADYProduction</h1>
+                <p>Dashboard Admin - Selamat Datang, <?= htmlspecialchars($_SESSION['nama']); ?></p>
+            </div>
+
         </div>
 
-        <div class="owner-info">
-            <h3><?= date("d F Y"); ?></h3>
-        </div>
+        <a href="../logout.php" class="btn-keluar">Keluar</a>
 
-    </div>
+    </header>
 
 <?php else: ?>
 
