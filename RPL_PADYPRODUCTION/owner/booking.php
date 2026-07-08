@@ -3,7 +3,7 @@
 require_once "../config/database.php";
 require_once "../config/auth.php";
 
-ownerAdmin();
+ownerOnly();
 
 $queryBooking = mysqli_query($conn, "
     SELECT *
